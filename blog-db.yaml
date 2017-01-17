@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: blog-mysql
+  labels:
+    run: blog
+spec:
+  ports:
+    - port: 3306
+  selector:
+    run: blog-sql
+  clusterIP: None
+  type: NodePort
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: blogdb-pv-claim3
+  labels:
+    run: blog-sql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: blog-db
+  labels:
+    run: blog-sql-deployment
+spec:
+  template:
+    metadata:
+      labels:
+        run: blog-sql
+    spec:
+      containers:
+      - image: mariadb:latest
+        name: blog-db-pod-2
+        ports:
+        - containerPort: 3306
+          name: sqlport
+        env :
+        - name: MYSQL_ROOT_PASSWORD
+          value: Vaneistein3
+        volumeMounts:
+        - mountPath: /var/lib/mysql3
+          name: mariadb-persistent-storage
+      volumes:
+      - name: mariadb-persistent-storage
+        persistentVolumeClaim:
+          claimName: blogdb-pv-claim3

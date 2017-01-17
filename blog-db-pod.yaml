@@ -1,0 +1,23 @@
+piVersion: v1
+kind: Pod
+metadata:
+  name: blog-db-pd-2
+  labels:
+    run: blog-sql
+spec:
+  containers:
+  - image: mariadb:latest
+    name: blog-db-pod
+    ports:
+    - containerPort: 3306
+      name: sqlport
+    env:
+    - name: MYSQL_ROOT_PASSWORD
+      value: "Vaneinstein3"
+    volumeMounts:
+    - mountPath: /var/lib/mysql2
+      name: mariadb-persistent-storage
+  volumes:
+  - name: mariadb-persistent-storage
+    persistentVolumeClaim:
+      claimName: blogdb-pv-claim2
