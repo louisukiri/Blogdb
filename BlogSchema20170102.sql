@@ -21,10 +21,10 @@ USE `blogs`;
 -- Table structure for table `blogPosts`
 --
 
-DROP TABLE IF EXISTS `blogPosts`;
+DROP TABLE IF EXISTS `blogposts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `blogPosts` (
+CREATE TABLE `blogposts` (
   `blog_post_id` int(11) NOT NULL AUTO_INCREMENT,
   `blog_post_title` varchar(45) NOT NULL,
   `blog_post_content` mediumtext NOT NULL,
